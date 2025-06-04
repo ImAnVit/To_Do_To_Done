@@ -1,6 +1,6 @@
 # miniprogram-ts-less-quickstart
 
-A quickstart template for a WeChat Mini Program using TypeScript and Less for styling.
+This is a simple task manager for WeChat.
 
 ## Features
 
