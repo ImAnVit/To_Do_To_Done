@@ -1,0 +1,194 @@
+<view class="container">
+  <view class="header">
+    <text class="title" style="text-align: center">{{isCalendarView ? uiText.calendarView : uiText.title}}</text>
+    <view class="header-buttons">
+      <view class="calendar-btn" bind:tap="toggleCalendarView">
+        <text class="calendar-symbol">{{isCalendarView ? '📋' : '📅'}}</text>
+      </view>
+      <view class="add-btn" bind:tap="navigateToAddTask">
+        <text class="plus-symbol">+</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="content {{isCalendarView ? 'calendar-view' : 'list-view'}}">
+    <block wx:if="{{isCalendarView}}">
+      <view class="calendar-container">
+        <calendar tasks="{{allTasks}}" />
+      </view>
+    </block>
+    <block wx:else>
+      <view class="task-list">
+        <block wx:if="{{tasks.length > 0}}">
+          <block wx:for="{{tasks}}" wx:key="id">
+            <view wx:if="{{!item.isDone}}" 
+                  class="task-item {{expandedTaskId === item.id ? 'expanded' : ''}} {{item.isShared && hasUserCompletedSharedTask(item) ? 'user-completed-shared' : ''}} priority-{{item.priority}}" 
+                  data-priority="{{item.priority}}"
+                  data-id="{{item.id}}" bindtap="toggleTaskExpand">
+              <!-- Task completion and sharing section -->
+              <view class="task-actions-column">
+                <!-- Task completion circle -->
+                <view class="complete-circle" style="background-color: {{item.isDone ? '#1296db' : 'transparent'}}; border-color: {{item.isDone ? '#1296db' : '#d9d9d9'}}" data-id="{{item.id}}" catchtap="markTaskAsDone">
+                  <block wx:if="{{item.isDone}}">
+                    <icon type="success" size="20" color="#fff" />
+                  </block>
+                </view>
+                
+                <!-- Share button (only shown if not already shared or is creator) -->
+                <view class="share-button-container" wx:if="{{!item.isShared || item.creatorId === userInfo.openId}}" catchtap="shareTask" data-id="{{item.id}}">
+                  <button class="share-button">
+                    <text>📤</text>
+                  </button>
+                </view>
+                
+                <!-- Shared indicator (if already shared) -->
+                <view class="shared-indicator" wx:if="{{item.isShared}}" catchtap="showSharedUsers" data-id="{{item.id}}">
+                  <text>👥</text>
+                  <text class="shared-count">{{item.sharedWith.length}}</text>
+                </view>
+              </view>
+
+              <!-- Task content section -->
+              <view class="task-content">
+                <!-- Task title and shared badge -->
+                <view class="task-title-container">
+                  <!-- Shared badge if task is shared -->
+                  <view class="shared-badge" wx:if="{{item.isShared}}">
+                    <text class="shared-text">Shared</text>
+                    <text class="completion-status">{{item.allCompleted ? 'Completed' : 'In progress'}}</text>
+                  </view>
+                  <text class="task-title {{item.isDone || (item.isShared && hasUserCompletedSharedTask(item)) ? 'done' : ''}}">{{item.name}}</text>
+                </view>
+                
+                <!-- Task date/time (positioned lower) -->
+                <view class="task-date-container">
+                  <text class="task-datetime">{{item.dueDate ? (item.dueDate + (item.dueTime ? ' · ' + item.dueTime : '')) : 'No due date'}}</text>
+                </view>
+                
+                <!-- Task description (only shown when expanded) -->
+                <block wx:if="{{expandedTaskId === item.id}}">
+                  <view class="task-description-container">
+                    <text class="task-description">{{item.description || 'No description provided.'}}</text>
+                    
+                    <!-- Shared users list (if expanded and task is shared) -->
+                    <view class="shared-users-list" wx:if="{{item.isShared && item.sharedWith && item.sharedWith.length > 0}}">
+                      <text class="shared-with-header">Shared with:</text>
+                      <view wx:for="{{item.sharedWith}}" wx:for-item="user" wx:key="openId" class="shared-user-item">
+                        <image src="{{user.avatarUrl || '/assets/default-avatar.png'}}" class="user-avatar"></image>
+                        <text class="user-name">{{user.nickname}}</text>
+                        <text class="user-status {{!user.accepted ? 'pending' : (user.completedTask ? 'completed' : 'in-progress')}}">
+                          {{!user.accepted ? 'Pending' : (user.completedTask ? 'Completed' : 'In progress')}}
+                        </text>
+                      </view>
+                    </view>
+                    
+                    <!-- Task actions (edit/delete buttons) - only for non-shared tasks -->
+                    <view class="task-actions" wx:if="{{!item.isShared}}">
+                      <button class="action-btn edit" data-id="{{item.id}}" catchtap="startInlineEdit">{{uiText.taskActions.edit}}</button>
+                      <button class="action-btn delete" data-id="{{item.id}}" catchtap="deleteTask">{{uiText.taskActions.delete}}</button>
+                    </view>
+                  </view>
+                </block>
+              </view>
+            </view>
+          </block>
+        </block>
+        <block wx:else>
+          <view class="empty-state">
+            <text>{{uiText.noTasks}}</text>
+          </view>
+        </block>
+      </view>
+    </block>
+  </view>
+  
+  <!-- Hidden share button for native WeChat sharing -->
+  <button id="shareTaskButton" open-type="share" class="hidden-share-button"></button>
+</view>
+
+<!-- Shared Users Modal -->
+<view class="modal-container" wx:if="{{sharedUsersVisible}}">
+  <view class="modal-backdrop" catchtap="closeSharedUsersModal"></view>
+  <view class="modal-content">
+    <view class="modal-header">
+      <text class="modal-title">Shared With</text>
+      <view class="modal-close" catchtap="closeSharedUsersModal">×</view>
+    </view>
+    <view class="modal-body">
+      <view class="shared-task-info">
+        <text class="shared-task-name">{{sharedTaskInfo.name}}</text>
+        <text class="shared-task-status">Status: {{sharedTaskInfo.allCompleted ? 'Completed by everyone' : 'In progress'}}</text>
+      </view>
+      <view class="shared-users-detail">
+        <view class="shared-user-item owner">
+          <image src="{{userInfo.avatarUrl || '/assets/default-avatar.png'}}" class="user-avatar"></image>
+          <text class="user-name">{{userInfo.nickName || 'You'}} (Creator)</text>
+          <text class="user-status {{sharedTaskInfo.isDone ? 'completed' : 'in-progress'}}">
+            {{sharedTaskInfo.isDone ? 'Completed' : 'In progress'}}
+          </text>
+        </view>
+        <view wx:for="{{sharedTaskInfo.sharedWith}}" wx:key="openId" class="shared-user-item">
+          <image src="{{item.avatarUrl || '/assets/default-avatar.png'}}" class="user-avatar"></image>
+          <text class="user-name">{{item.nickname}}</text>
+          <text class="user-status {{!item.accepted ? 'pending' : (item.completedTask ? 'completed' : 'in-progress')}}">
+            {{!item.accepted ? 'Pending' : (item.completedTask ? 'Completed' : 'In progress')}}
+          </text>
+        </view>
+      </view>
+    </view>
+    <view class="modal-footer">
+      <button class="modal-btn confirm" catchtap="closeSharedUsersModal">Close</button>
+    </view>
+  </view>
+</view>
+
+<!-- Edit Task Modal -->
+<view class="modal-container" wx:if="{{editingTaskId !== null}}">
+  <view class="modal-backdrop" catchtap="cancelTaskEdit"></view>
+  <view class="modal-content">
+    <view class="modal-header">
+      <text class="modal-title">{{uiText.taskForm.title}}</text>
+      <view class="modal-close" catchtap="cancelTaskEdit">×</view>
+    </view>
+    <view class="modal-body">
+      <view class="form-group">
+        <text class="form-label">{{uiText.taskForm.taskName}}</text>
+        <input class="form-input single-line" value="{{editingTaskName}}" bindinput="onTaskNameInput" placeholder="{{uiText.taskForm.taskNamePlaceholder}}" />
+      </view>
+      <view class="form-group">
+        <text class="form-label">{{uiText.taskForm.description}}</text>
+        <textarea class="form-textarea" value="{{editingTaskDescription}}" bindinput="onTaskDescriptionInput" placeholder="{{uiText.taskForm.descriptionPlaceholder}}" maxlength="300" />
+        <text class="char-count">{{editingTaskDescription.length || 0}}/300</text>
+      </view>
+      <view class="form-group">
+        <text class="form-label">{{uiText.taskForm.dueDate}}</text>
+        <picker mode="date" value="{{editingTaskDueDate}}" start="{{today}}" bindchange="onTaskDueDateChange">
+          <view class="picker-view">
+            <text>{{editingTaskDueDate || uiText.taskForm.selectDate}}</text>
+          </view>
+        </picker>
+      </view>
+      <view class="form-group">
+        <text class="form-label">{{uiText.taskForm.dueTime}}</text>
+        <picker mode="time" value="{{editingTaskDueTime}}" bindchange="onTaskDueTimeChange">
+          <view class="picker-view">
+            <text>{{editingTaskDueTime || uiText.taskForm.selectTime}}</text>
+          </view>
+        </picker>
+      </view>
+      <view class="form-group">
+        <text class="form-label">{{uiText.taskForm.priority}}</text>
+        <picker mode="selector" range="{{priorityOptions}}" value="{{editingTaskPriorityIndex}}" bindchange="onTaskPriorityChange">
+          <view class="picker-view priority-picker">
+            <view class="priority-indicator {{editingTaskPriority ? 'priority-' + editingTaskPriority : ''}}"></view>
+            <text>{{priorityOptions[editingTaskPriorityIndex]}}</text>
+          </view>
+        </picker>
+      </view>
+    </view>
+    <view class="modal-footer">
+      <button class="modal-btn cancel" catchtap="cancelTaskEdit">{{uiText.taskActions.cancel}}</button>
+      <button class="modal-btn confirm" catchtap="saveTaskEdit">{{uiText.taskActions.save}}</button>
+    </view>
+  </view>
+</view>

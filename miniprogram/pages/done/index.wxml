@@ -1,0 +1,69 @@
+<view class="container">
+  <view class="header">
+    <text class="title" style="text-align: center; width: 100%;">{{uiText.title}}</text>
+  </view>
+
+  <view class="content">
+    <view class="task-list">
+      <block wx:if="{{tasks.length > 0}}">
+        <block wx:for="{{tasks}}" wx:key="id">
+          <view class="task-item {{expandedTaskId === item.id ? 'expanded' : ''}}" 
+                data-priority="{{item.priority}}"
+                data-id="{{item.id}}">
+            <view class="task-content" bind:tap="{{editingTaskId === item.id ? '' : 'toggleTaskExpand'}}" data-id="{{item.id}}">
+              <block wx:if="{{editingTaskId === item.id}}">
+                <view class="edit-form">
+                  <view class="form-group">
+                    <text class="form-label">Task Name</text>
+                    <input class="task-name-input" value="{{editingTaskName}}" bindinput="onTaskNameInput" focus="true" />
+                  </view>
+                  <view class="form-group">
+                    <text class="form-label">Description</text>
+                    <textarea class="task-description-input" value="{{editingTaskDescription}}" bindinput="onTaskDescriptionInput" />
+                  </view>
+                  <view class="form-group">
+                    <text class="form-label">Due Date</text>
+                    <picker mode="date" value="{{editingTaskDueDate}}" start="2023-01-01" end="2030-12-31" bindchange="onTaskDueDateChange">
+                      <view class="picker-view">{{editingTaskDueDate || 'Select date'}}</view>
+                    </picker>
+                  </view>
+                  <view class="form-group">
+                    <text class="form-label">Due Time</text>
+                    <picker mode="time" value="{{editingTaskDueTime}}" bindchange="onTaskDueTimeChange">
+                      <view class="picker-view">{{editingTaskDueTime || 'Select time'}}</view>
+                    </picker>
+                  </view>
+                  <view class="form-group">
+                    <text class="form-label">Priority</text>
+                    <picker mode="selector" range="{{priorityOptions}}" value="{{editingTaskPriorityIndex}}" bindchange="onTaskPriorityChange">
+                      <view class="picker-view priority-{{editingTaskPriority}}">{{priorityOptions[editingTaskPriorityIndex]}}</view>
+                    </picker>
+                  </view>
+                  <view class="edit-actions">
+                    <button class="action-btn save" catch:tap="saveTaskEdit" data-id="{{item.id}}">{{taskActions.save || 'Save'}}</button>
+                    <button class="action-btn cancel" catch:tap="cancelTaskEdit">{{taskActions.cancel || 'Cancel'}}</button>
+                  </view>
+                </view>
+              </block>
+              <block wx:else>
+                <text class="task-name">{{item.name}}</text>
+                <text class="task-datetime">Completed: {{item.completedDate}}</text>
+                <text class="task-datetime">Due: {{item.dueDate}} {{item.dueTime}}</text>
+                <view class="task-description {{expandedTaskId === item.id ? 'show' : ''}}">
+                  <text>{{item.description}}</text>
+                  <view class="task-actions">
+                    <button class="action-btn back" catch:tap="moveTaskBack" data-id="{{item.id}}">{{taskActions.back || 'Back'}}</button>
+                    <button class="action-btn delete" catch:tap="deleteTask" data-id="{{item.id}}">{{taskActions.delete || 'Delete'}}</button>
+                  </view>
+                </view>
+              </block>
+            </view>
+          </view>
+        </block>
+      </block>
+      <view wx:else class="empty-state">
+        <text>{{uiText.noTasks}}</text>
+      </view>
+    </view>
+  </view>
+</view>

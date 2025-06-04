@@ -1,0 +1,114 @@
+page {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  min-height: 100vh;
+  position: relative;
+  background-color: #fafafa; /* Changed from #000000 to app's grey */
+  /* background-image: url('./images/background.jpg');  Removed due to WXSS limitation */
+  /* Use a base64 or web image for background if needed */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* Remove the semi-transparent overlay for a clean grey background */
+page::before {
+  content: none;
+}
+
+/* Ensure content is above the overlay */
+view, text, button {
+  position: relative;
+  z-index: 2; /* Ensure content is above the overlay */
+  color: #222222; /* Adjust text color for readability on grey */
+}
+
+button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+/* Remove unnecessary ::after pseudo-element styles */
+page::after {
+  content: none;
+}
+
+/* Global background style */
+.page {
+  /* background-image: url('./assets/backgrounds/your-background-image.jpg');  Removed due to WXSS limitation */
+  /* Use a base64 or web image for background if needed */
+  background-size: cover; /* Adjust size to cover the entire page */
+  background-position: center; /* Center the image */
+  background-repeat: no-repeat; /* Prevent tiling */
+  background-color: #fafafa; /* Changed from rgba(0, 0, 0, 0.8) to app's grey */
+  background-blend-mode: overlay; /* Blend the image with the overlay */
+}
+
+.page-container {
+  position: relative;
+  width: 100%;
+  height: 100vh; /* Full viewport height */
+  overflow: hidden; /* Prevent content overflow */
+}
+
+.background-image {
+  position: fixed; /* Use fixed positioning for consistent background */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1; /* Ensure it stays behind other content */
+  object-fit: cover; /* Ensures the image covers the area */
+}
+
+.container {
+  padding-bottom: 180rpx;
+  min-height: calc(100vh - 180rpx);
+  background-color: rgba(255, 255, 255, 0.5);
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.05);
+  position: relative;
+  z-index: 1;
+}
+
+.container::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  border-bottom: 2rpx solid #e0e0e0;
+  border-bottom-style: dashed;
+}
+
+.page-content {
+  position: relative;
+  background: 
+    linear-gradient(90deg, transparent 39rpx, #e0e0e0 40rpx, transparent 41rpx),
+    linear-gradient(#fafafa 29rpx, #e0e0e0 30rpx);
+  background-size: 40rpx 30rpx;
+}
+
+.custom-nav {
+  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.05);
+}
+
+.weapp-tabbar {
+  padding-top: 20rpx !important;
+  height: 160rpx !important;
+}
+
+.weapp-tabbar__item {
+  font-size: 48rpx !important;
+  font-weight: 900 !important;
+  line-height: 1.2 !important;
+  transform: translateY(-20rpx);
+}
+
+.weapp-tabbar__item--on {
+  font-size: 50rpx !important;
+}

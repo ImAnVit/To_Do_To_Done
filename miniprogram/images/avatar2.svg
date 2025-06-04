@@ -1,0 +1,6 @@
+<!-- Base64 encoded PNG for a simple green avatar -->
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200">
+  <circle cx="100" cy="100" r="100" fill="#12db96"/>
+  <circle cx="100" cy="70" r="30" fill="#ffffff"/>
+  <path d="M100,110 C70,110 50,130 50,160 L150,160 C150,130 130,110 100,110 Z" fill="#ffffff"/>
+</svg>

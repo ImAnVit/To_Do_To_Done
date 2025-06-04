@@ -1,0 +1,102 @@
+<view class="container">
+  <view class="header">
+    <text class="title">{{language === 'en' ? 'Settings' : '设置'}}</text>
+  </view>
+
+  <view class="content">
+    <!-- Profile Section -->
+    <view class="settings-group profile-group">
+      <view class="profile-section">
+        <!-- Avatar: Grey circle with blue man icon -->
+        <view class="avatar-container">
+          <view class="avatar-circle" bindtap="chooseAvatar">
+            <image wx:if="{{avatarUrl}}" class="avatar" src="{{avatarUrl}}" mode="aspectFill"></image>
+            <view wx:else class="default-avatar">
+              <view class="man-icon"></view>
+            </view>
+          </view>
+        </view>
+        
+        <!-- Name: Clickable for editing -->
+        <view class="name-section">
+          <block wx:if="{{!isEditingName}}">
+            <text class="user-name" bindtap="startEditingName">{{name}}</text>
+          </block>
+          <block wx:else>
+            <input class="name-input" value="{{customName}}" bindinput="updateName" focus="true" placeholder="{{language === 'en' ? 'Enter your name' : '输入您的名字'}}" />
+            <view class="edit-buttons">
+              <text class="save-btn" bindtap="saveName">
+                {{language === 'en' ? '✓ Save' : '✓ 保存'}}
+              </text>
+              <text class="cancel-btn" bindtap="cancelEditName">
+                {{language === 'en' ? '✕ Cancel' : '✕ 取消'}}
+              </text>
+            </view>
+          </block>
+        </view>
+      </view>
+    </view>
+
+    <!-- Task Statistics Section -->
+    <view class="settings-group task-stats">
+      <view class="settings-item center-label">
+        <text class="item-label">{{language === 'en' ? 'Tasks Overview' : '任务概览'}}</text>
+      </view>
+      <view class="stats-container">
+        <view class="stat-item">
+          <text class="stat-value">{{activeTasks}}</text>
+          <text class="stat-label">{{language === 'en' ? 'Active' : '活跃'}}</text>
+        </view>
+        <view class="stat-item">
+          <text class="stat-value">{{completedTasks}}</text>
+          <text class="stat-label">{{language === 'en' ? 'Completed' : '已完成'}}</text>
+        </view>
+        <view class="stat-item">
+          <text class="stat-value">{{totalTasks}}</text>
+          <text class="stat-label">{{language === 'en' ? 'Total' : '总计'}}</text>
+        </view>
+      </view>
+      <view class="small-reset-button" bind:tap="resetTasks">
+        <text>{{language === 'en' ? 'Reset All Tasks' : '重置所有任务'}}</text>
+      </view>
+    </view>
+
+    <!-- App Settings Section -->
+    <view class="settings-group">
+      <view class="section-title">{{language === 'en' ? 'App Settings' : '应用设置'}}</view>
+      <!-- Notifications Toggle -->
+      <view class="settings-item" bind:tap="toggleNotifications">
+        <text class="item-label">{{language === 'en' ? 'Send Notifications' : '发送通知'}}</text>
+        <switch checked="{{notifications}}" color="#1296db" />
+      </view>
+      
+      <!-- Language Selector -->
+      <view class="settings-item language-item">
+        <text class="setting-label">{{language === 'en' ? 'Language' : '语言'}}</text>
+        <view class="language-options">
+          <button 
+            class="language-button"
+            bindtap="switchLanguage" 
+            data-lang="en"
+          >
+            {{language === 'en' ? 'English/中文' : '中文/English'}}
+          </button>
+        </view>
+      </view>
+    </view>
+
+    <!-- Share Section -->
+    <view class="settings-group">
+      <view class="section-title">{{language === 'en' ? 'Share' : '分享'}}</view>
+      <view class="settings-item share-item no-border" bind:tap="shareWithFriends">
+        <text class="item-label">{{language === 'en' ? 'Share with Friends' : '分享给朋友'}}</text>
+        <text class="share-icon">📤</text>
+      </view>
+      <button open-type="share" class="share-action-button" id="shareButton">{{language === 'en' ? 'Share Tasks' : '分享任务'}}</button>
+    </view>
+  </view>
+
+  <view class="credits">
+    <text>made by ImAnVit</text>
+  </view>
+</view>

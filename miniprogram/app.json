@@ -1,0 +1,38 @@
+{
+  "pages": [
+    "pages/do/index",
+    "pages/done/index",
+    "pages/profile/index",
+    "pages/add-task/index",
+    "pages/calendar/index",
+    "pages/tasks/index"
+  ],
+  "window": {
+    "navigationBarTextStyle": "black",
+    "navigationStyle": "custom",
+    "backgroundColor": "#000000"
+  },
+  "tabBar": {
+    "custom": false,
+    "color": "#666666",
+    "selectedColor": "#1296db",
+    "backgroundColor": "#ffffff",
+    "borderStyle": "black",
+    "position": "bottom",
+    "list": [
+      {
+        "pagePath": "pages/do/index",
+        "text": "DO"
+      },
+      {
+        "pagePath": "pages/done/index",
+        "text": "DONE"
+      },
+      {
+        "pagePath": "pages/profile/index",
+        "text": "PROFILE"
+      }
+    ]
+  },
+  "sitemapLocation": "sitemap.json"
+}

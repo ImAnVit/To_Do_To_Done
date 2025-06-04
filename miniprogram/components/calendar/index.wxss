@@ -1,0 +1,191 @@
+.calendar {
+  background: #fff;
+  border-radius: 16rpx;
+  overflow: hidden;
+  position: relative;
+}
+
+.calendar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24rpx;
+  background: #f8f8f8;
+}
+
+.arrow {
+  width: 60rpx;
+  height: 60rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: #fff;
+  cursor: pointer;
+}
+
+.arrow-text {
+  font-size: 32rpx;
+  color: #333;
+}
+
+.month-year {
+  font-size: 32rpx;
+  font-weight: 500;
+  color: #333;
+}
+
+.weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  padding: 16rpx 0;
+  background: #fff;
+  border-bottom: 2rpx solid #f0f0f0;
+}
+
+.weekday {
+  text-align: center;
+  font-size: 24rpx;
+  color: #999;
+}
+
+.days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 8rpx;
+  padding: 8rpx;
+}
+
+.day {
+  aspect-ratio: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12rpx 0;
+  position: relative;
+  border-radius: 8rpx;
+}
+
+.day-text {
+  font-size: 28rpx;
+  color: #333;
+  margin-bottom: 8rpx;
+}
+
+.day.other-month .day-text {
+  color: #ccc;
+}
+
+.day.selected {
+  background: #e6f7ff;
+}
+
+.day.selected .day-text {
+  color: #1296db;
+  font-weight: bold;
+}
+
+.task-indicators {
+  display: flex;
+  gap: 4rpx;
+  justify-content: center;
+  margin-top: 4rpx;
+}
+
+.task-dot {
+  width: 8rpx;
+  height: 8rpx;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+/* Task Details Popup */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 100;
+}
+
+.task-details-popup {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+  max-height: 80vh;
+  background: #fff;
+  border-radius: 16rpx;
+  z-index: 101;
+  overflow: hidden;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.15);
+}
+
+.popup-header {
+  padding: 24rpx;
+  background: #f8f8f8;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2rpx solid #f0f0f0;
+}
+
+.popup-title {
+  font-size: 32rpx;
+  font-weight: 500;
+  color: #333;
+}
+
+.close-btn {
+  font-size: 40rpx;
+  color: #999;
+  padding: 0 20rpx;
+}
+
+.task-list {
+  padding: 16rpx;
+  max-height: 60vh;
+  overflow-y: auto;
+}
+
+.task-item {
+  margin-bottom: 16rpx;
+  padding: 16rpx;
+  background: #f8f8f8;
+  border-radius: 8rpx;
+  border-left: 8rpx solid;
+}
+
+.task-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8rpx;
+}
+
+.task-name {
+  font-size: 28rpx;
+  font-weight: 500;
+  color: #333;
+}
+
+.task-status {
+  font-size: 24rpx;
+  padding: 4rpx 12rpx;
+  border-radius: 100rpx;
+  background: #1296db;
+  color: #fff;
+}
+
+.task-status.done {
+  background: #999;
+}
+
+.task-time {
+  font-size: 24rpx;
+  color: #666;
+}

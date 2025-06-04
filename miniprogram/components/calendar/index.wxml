@@ -1,0 +1,53 @@
+<view class="calendar">
+  <view class="calendar-header">
+    <view class="arrow" bind:tap="prevMonth">
+      <text class="arrow-text">←</text>
+    </view>
+    <text class="month-year">{{currentMonthYear}}</text>
+    <view class="arrow" bind:tap="nextMonth">
+      <text class="arrow-text">→</text>
+    </view>
+  </view>
+
+  <view class="weekdays">
+    <block wx:for="{{weekDays}}" wx:key="*this">
+      <text class="weekday">{{item}}</text>
+    </block>
+  </view>
+
+  <view class="days">
+    <block wx:for="{{days}}" wx:key="date">
+      <view class="day {{item.isCurrentMonth ? '' : 'other-month'}} {{item.date === currentSelectedDate ? 'selected' : ''}}"
+        data-date="{{item.date}}"
+        bind:tap="onDaySelect"
+      >
+        <text class="day-text">{{item.day}}</text>
+        <view class="task-indicators" wx:if="{{item.tasks && item.tasks.length > 0}}">
+          <block wx:for="{{item.tasks}}" wx:key="id" wx:for-item="task" wx:for-index="taskIndex" wx:if="{{taskIndex < 3}}">
+            <view class="task-dot" style="background-color: {{task.isDone ? '#999999' : '#1296db'}}"></view>
+          </block>
+        </view>
+      </view>
+    </block>
+  </view>
+
+  <!-- Task Details Popup -->
+  <view class="task-details-popup" wx:if="{{showTaskDetails && selectedDayTasks.length > 0}}">
+    <view class="popup-header">
+      <text class="popup-title">Tasks for {{selectedDateFormatted}}</text>
+      <view class="close-btn" bind:tap="closeTaskDetails">×</view>
+    </view>
+    <view class="task-list">
+      <block wx:for="{{selectedDayTasks}}" wx:key="id">
+        <view class="task-item" style="border-left-color: {{item.priority === 'red' ? '#ff4d4f' : item.priority === 'yellow' ? '#faad14' : '#52c41a'}}">
+          <view class="task-header">
+            <text class="task-name">{{item.name}}</text>
+            <text class="task-status {{item.isDone ? 'done' : ''}}">{{item.isDone ? 'Done' : 'Active'}}</text>
+          </view>
+          <text class="task-time">{{item.dueTime}}</text>
+        </view>
+      </block>
+    </view>
+  </view>
+  <view class="overlay" wx:if="{{showTaskDetails}}" bind:tap="closeTaskDetails"></view>
+</view>

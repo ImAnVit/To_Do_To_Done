@@ -1,0 +1,12 @@
+{
+  "title": "添加新任务",
+  "name": "任务名称",
+  "description": "任务描述",
+  "priority": "优先级",
+  "dueDate": "截止日期",
+  "dueTime": "截止时间",
+  "submit": "添加任务",
+  "high": "高",
+  "medium": "中",
+  "low": "低"
+}

@@ -1,0 +1,19 @@
+{
+  "tabBar": {
+    "custom": true,
+    "list": [
+      {
+        "pagePath": "pages/do/index",
+        "text": "DO"
+      },
+      {
+        "pagePath": "pages/done/index",
+        "text": "DONE"
+      },
+      {
+        "pagePath": "pages/profile/index",
+        "text": "PROFILE"
+      }
+    ]
+  }
+} 

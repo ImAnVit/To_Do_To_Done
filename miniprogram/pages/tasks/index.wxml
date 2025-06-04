@@ -1,0 +1,39 @@
+<view class="container">
+  <view class="header">
+    <text class="title">{{language === 'zh' ? '我的任务' : 'My Tasks'}}</text>
+  </view>
+  
+  <view class="add-task">
+    <input 
+      class="task-input" 
+      placeholder="{{language === 'zh' ? '添加新任务...' : 'Add a new task...'}}" 
+      value="{{newTaskText}}" 
+      bindinput="onInputChange"
+      confirm-type="done"
+      bindconfirm="addTask"
+    />
+    <button class="add-btn" bindtap="addTask">{{language === 'zh' ? '添加' : 'Add'}}</button>
+  </view>
+  
+  <view class="task-list">
+    <block wx:if="{{tasks.length > 0}}">
+      <view 
+        wx:for="{{tasks}}" 
+        wx:key="id" 
+        class="task-item {{item.completed ? 'completed' : ''}}"
+      >
+        <view class="task-content" bindtap="toggleComplete" data-id="{{item.id}}">
+          <icon type="{{item.completed ? 'success' : 'circle'}}" size="18" color="{{item.completed ? '#07c160' : '#999'}}"/>
+          <text class="task-text">{{item.text}}</text>
+        </view>
+        <view class="delete-btn" bindtap="deleteTask" data-id="{{item.id}}" aria-label="{{taskActions.delete}}">
+          <icon type="clear" size="18" color="#ff4d4f"/>
+        </view>
+      </view>
+    </block>
+    
+    <view wx:else class="empty-state">
+      <text>{{language === 'zh' ? '还没有任务，在上面添加一个！' : 'No tasks yet. Add one above!'}}</text>
+    </view>
+  </view>
+</view>

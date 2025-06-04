@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "Tasks To Do",
+  "enablePullDownRefresh": true,
+  "usingComponents": {
+    "calendar": "/components/calendar/index"
+  }
+}

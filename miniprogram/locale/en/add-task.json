@@ -1,0 +1,12 @@
+{
+  "title": "Add New Task",
+  "name": "Task Name",
+  "description": "Description",
+  "priority": "Priority",
+  "dueDate": "Due Date",
+  "dueTime": "Due Time",
+  "submit": "Add Task",
+  "high": "High",
+  "medium": "Medium",
+  "low": "Low"
+}

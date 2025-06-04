@@ -1,0 +1,39 @@
+<view class="container">
+  <view class="header">
+    <text class="title">{{language === 'en' ? 'Calendar' : '日历'}}</text>
+  </view>
+
+  <view class="content">
+    <view class="calendar-container">
+      <calendar 
+        tasks="{{tasks}}"
+        bind:dayClick="onDayClick"
+        selectedDate="{{selectedDate}}"
+      />
+    </view>
+
+    <view class="tasks-panel" wx:if="{{selectedDate}}">
+      <view class="panel-header">
+        <text>{{language === 'en' ? 'Tasks for ' : '任务日期：'}}{{selectedDate}}</text>
+      </view>
+      <view class="tasks-list">
+        <block wx:if="{{selectedTasks.length > 0}}">
+          <view class="task-item {{task.isDone ? 'completed' : ''}}" 
+                wx:for="{{selectedTasks}}" 
+                wx:key="id" 
+                wx:for-item="task">
+            <view class="task-priority" style="background-color: {{task.priorityColor}}"></view>
+            <view class="task-content">
+              <text class="task-name">{{task.name}}</text>
+              <text class="task-time">{{task.dueTime}}</text>
+              <text class="task-status">{{task.isDone ? (language === 'en' ? 'Completed' : '已完成') : (language === 'en' ? 'Active' : '进行中')}}</text>
+            </view>
+          </view>
+        </block>
+        <view wx:else class="no-tasks">
+          <text>{{language === 'en' ? 'No tasks for this day' : '当天没有任务'}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+</view> 

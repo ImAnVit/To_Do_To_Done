@@ -1,0 +1,88 @@
+<view class="container">
+  <view class="header">
+    <view class="back-btn" bind:tap="onBack">
+      <text class="back-symbol">＜</text>
+    </view>
+    <text class="title">{{language === 'en' ? 'Add New Task' : '添加新任务'}}</text>
+  </view>
+
+  <view class="form">
+    <view class="form-item">
+      <text class="label">{{language === 'en' ? 'Name' : '任务名称'}}</text>
+      <input class="input" 
+        placeholder="{{language === 'en' ? 'Enter task name' : '输入任务名称'}}" 
+        value="{{name}}" 
+        bindinput="onNameInput"
+      />
+    </view>
+
+    <view class="form-item">
+      <text class="label">{{language === 'en' ? 'Description' : '任务描述'}}</text>
+      <textarea class="textarea" 
+        placeholder="{{language === 'en' ? 'Enter task description (max 300 characters)' : '输入任务描述（最多300字）'}}" 
+        value="{{description}}" 
+        bindinput="onDescriptionInput"
+        maxlength="300"
+      />
+      <text class="char-count">{{description.length || 0}}/300</text>
+    </view>
+
+    <view class="form-item">
+      <text class="label">{{language === 'en' ? 'Priority' : '优先级'}}</text>
+      <view class="priority-options">
+        <view class="priority-option {{priority === 'red' ? 'selected' : ''}}"
+          style="background-color: #ffebee;"
+          data-priority="red"
+          bind:tap="onPrioritySelect"
+        >
+          <view class="priority-color" style="background-color: red;"></view>
+          <text>{{language === 'en' ? 'High' : '高'}}</text>
+        </view>
+        <view class="priority-option {{priority === 'yellow' ? 'selected' : ''}}"
+          style="background-color: #fff8e1;"
+          data-priority="yellow"
+          bind:tap="onPrioritySelect"
+        >
+          <view class="priority-color" style="background-color: yellow;"></view>
+          <text>{{language === 'en' ? 'Medium' : '中'}}</text>
+        </view>
+        <view class="priority-option {{priority === 'green' ? 'selected' : ''}}"
+          style="background-color: #e8f5e9;"
+          data-priority="green"
+          bind:tap="onPrioritySelect"
+        >
+          <view class="priority-color" style="background-color: green;"></view>
+          <text>{{language === 'en' ? 'Low' : '低'}}</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="form-item">
+      <text class="label">{{language === 'en' ? 'Due Date' : '截止日期'}}</text>
+      <picker mode="date" value="{{dueDate}}" start="{{today}}" bindchange="onDateChange">
+        <view class="picker">
+          {{dueDate || (language === 'en' ? 'Select date' : '选择日期')}}
+        </view>
+      </picker>
+    </view>
+
+    <view class="form-item">
+      <text class="label">{{language === 'en' ? 'Due Time' : '截止时间'}}</text>
+      <picker mode="time" value="{{dueTime}}" bindchange="onTimeChange">
+        <view class="picker">
+          {{dueTime || (language === 'en' ? 'Select time' : '选择时间')}}
+        </view>
+      </picker>
+    </view>
+  </view>
+
+  <view class="footer">
+    <button 
+      class="submit-btn" 
+      disabled="{{!isValid}}"
+      bindtap="onSubmit"
+    >
+      {{language === 'en' ? 'Add Task' : '添加任务'}}
+    </button>
+  </view>
+</view>

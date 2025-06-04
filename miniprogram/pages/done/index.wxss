@@ -1,0 +1,258 @@
+.container {
+  padding: 24rpx;
+  min-height: 100vh;
+  background: #f8f8f8;
+  box-sizing: border-box;
+  position: relative;
+}
+
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 120rpx 48rpx 24rpx;
+  background: #f8f8f8;
+  z-index: 100;
+  box-sizing: border-box;
+}
+
+.header-buttons {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 40rpx;
+}
+
+.title {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #333;
+  text-align: center;
+  width: 100%;
+}
+
+.content {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0 48rpx;
+  margin-top: 180rpx;
+}
+
+.task-list {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.task-item {
+  background: #f5f5f5;
+  border-radius: 32rpx;
+  margin-bottom: 40rpx;
+  padding: 40rpx;
+  display: flex;
+  align-items: flex-start;
+  box-shadow: 0 8rpx 16rpx rgba(0, 0, 0, 0.06);
+  width: 100%;
+  box-sizing: border-box;
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+.task-content {
+  flex: 1;
+}
+
+.task-name {
+  font-size: 34rpx;
+  color: #999;
+  margin-bottom: 12rpx;
+  display: block;
+  line-height: 1.4;
+  text-decoration: line-through;
+}
+
+.task-name-input {
+  width: calc(100% - 20rpx);
+  font-size: 34rpx;
+  color: #333;
+  margin-bottom: 12rpx;
+  padding: 10rpx;
+  border: 1px solid #1296db;
+  border-radius: 8rpx;
+  background-color: #fff;
+  box-sizing: border-box;
+}
+
+.task-datetime {
+  font-size: 28rpx;
+  color: #999;
+  display: block;
+  line-height: 1.4;
+  margin-bottom: 24rpx;
+}
+
+.task-description {
+  height: 0;
+  opacity: 0;
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+.task-description-input {
+  width: calc(100% - 20rpx);
+  height: 160rpx;
+  font-size: 30rpx;
+  color: #333;
+  margin-bottom: 16rpx;
+  padding: 10rpx;
+  border: 1px solid #1296db;
+  border-radius: 8rpx;
+  background-color: #fff;
+  box-sizing: border-box;
+}
+
+.task-description.show {
+  height: auto;
+  opacity: 1;
+  margin-top: 24rpx;
+  padding-top: 24rpx;
+  border-top: 2rpx solid #f0f0f0;
+}
+
+.task-description text {
+  font-size: 30rpx;
+  color: #666;
+  line-height: 1.6;
+  display: block;
+  margin-bottom: 32rpx;
+}
+
+.task-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 16rpx;
+}
+
+.edit-actions {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 16rpx;
+  margin-top: 16rpx;
+  width: 100%;
+}
+
+.action-btn {
+  width: 100%;
+  height: 100rpx;
+  border-radius: 40rpx;
+  font-size: 40rpx;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  padding: 0;
+  margin: 0;
+  line-height: 1;
+}
+
+.action-btn.save, .action-btn.cancel {
+  flex: 1;
+  height: 80rpx;
+  border-radius: 8rpx;
+  font-size: 32rpx;
+}
+
+.action-btn.delete {
+  background: #fff1f0;
+  color: #ff4d4f;
+}
+
+.action-btn.back {
+  background: #e6f7ff;
+  color: #1296db;
+  margin-bottom: 16rpx;
+}
+
+.action-btn.save {
+  background: #52c41a;
+  color: #fff;
+}
+
+.action-btn.cancel {
+  background: #f5f5f5;
+  color: #666;
+}
+
+.action-btn.edit {
+  background: #e6f7ff;
+  color: #1296db;
+}
+
+.edit-form {
+  background-color: #f9f9f9;
+  border-radius: 12rpx;
+  padding: 20rpx;
+  margin-bottom: 16rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.05);
+}
+
+.form-group {
+  margin-bottom: 16rpx;
+}
+
+.form-label {
+  display: block;
+  font-size: 28rpx;
+  color: #666;
+  margin-bottom: 8rpx;
+}
+
+.picker-view {
+  background-color: #fff;
+  padding: 16rpx;
+  border-radius: 8rpx;
+  border: 1px solid #e8e8e8;
+  font-size: 30rpx;
+  color: #333;
+}
+
+.priority-red {
+  color: #ff4d4f;
+  border-left: 4rpx solid #ff4d4f;
+  padding-left: 12rpx;
+}
+
+.priority-yellow {
+  color: #faad14;
+  border-left: 4rpx solid #faad14;
+  padding-left: 12rpx;
+}
+
+.priority-green {
+  color: #52c41a;
+  border-left: 4rpx solid #52c41a;
+  padding-left: 12rpx;
+}
+
+.priority-none {
+  color: #666;
+}
+
+.empty-state {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.empty-state text {
+  font-size: 36rpx;
+  color: #999;
+}

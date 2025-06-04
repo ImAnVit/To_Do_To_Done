@@ -1,0 +1,11 @@
+<view class="tab-bar">
+  <view class="tab-bar-item {{selected === 0 ? 'selected' : ''}}" bindtap="switchTab" data-index="0" data-path="/pages/do/index">
+    <view class="tab-text">DO</view>
+  </view>
+  <view class="tab-bar-item {{selected === 1 ? 'selected' : ''}}" bindtap="switchTab" data-index="1" data-path="/pages/done/index">
+    <view class="tab-text">DONE</view>
+  </view>
+  <view class="tab-bar-item {{selected === 2 ? 'selected' : ''}}" bindtap="switchTab" data-index="2" data-path="/pages/profile/index">
+    <view class="tab-text">PROFILE</view>
+  </view>
+</view> 

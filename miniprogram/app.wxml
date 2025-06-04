@@ -1,0 +1,4 @@
+<view class="page-container">
+  <image class="background-image" src="/images/background.jpg" mode="aspectFill"></image>
+  <slot></slot>
+</view>

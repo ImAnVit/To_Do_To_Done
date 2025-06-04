@@ -1,0 +1,5 @@
+{
+  "navigationBarTitleText": "Completed Tasks",
+  "enablePullDownRefresh": true,
+  "usingComponents": {}
+}

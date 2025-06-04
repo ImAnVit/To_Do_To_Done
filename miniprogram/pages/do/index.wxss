@@ -1,0 +1,756 @@
+.container {
+  padding: 24rpx;
+  min-height: 100vh;
+  background: #f8f8f8;
+  box-sizing: border-box;
+  position: relative;
+}
+
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 120rpx 48rpx 24rpx;
+  background: #f8f8f8;
+  z-index: 100;
+  box-sizing: border-box;
+}
+
+.header-buttons {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 40rpx;
+}
+
+.title {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #333;
+  text-align: center;
+}
+
+.calendar-btn, .add-btn {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.1);
+}
+
+.calendar-btn {
+  background: #ffffff;
+}
+
+.add-btn {
+  background: #1296db;
+}
+
+.calendar-symbol {
+  font-size: 48rpx;
+}
+
+.plus-symbol {
+  color: white;
+  font-size: 60rpx;
+  font-weight: 300;
+  margin-top: -4rpx;
+}
+
+.content {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0 48rpx;
+  margin-top: 420rpx;
+}
+
+.task-list {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.task-item {
+  background: #fff;
+  border-radius: 32rpx;
+  margin-bottom: 40rpx;
+  padding: 40rpx;
+  display: flex;
+  align-items: flex-start;
+  box-shadow: 0 8rpx 16rpx rgba(0, 0, 0, 0.06);
+  width: 100%;
+  box-sizing: border-box;
+  transition: all 0.3s ease;
+  overflow: hidden;
+  position: relative;
+}
+
+.task-item[data-priority="high"] {
+  border-left: 8rpx solid #ff4d4f; /* High priority color */
+}
+
+.task-item[data-priority="medium"] {
+  border-left: 8rpx solid #faad14; /* Medium priority color */
+}
+
+.task-item[data-priority="low"] {
+  border-left: 8rpx solid #52c41a; /* Low priority color */
+}
+
+.task-item.expanded {
+  padding-bottom: 32rpx;
+}
+
+/* Task actions column for vertical layout */
+.task-actions-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-right: 24rpx;
+  width: 48rpx;
+}
+
+.complete-circle {
+  width: 48rpx;
+  height: 48rpx;
+  border-radius: 50%;
+  border: 4rpx solid #d9d9d9;
+  flex-shrink: 0;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16rpx;
+  box-sizing: border-box;
+}
+
+.complete-circle:active {
+  background-color: #1296db;
+  border-color: #1296db;
+}
+
+/* Share button styles */
+.share-button-container {
+  margin-top: 16rpx;
+}
+
+.share-button {
+  width: 48rpx;
+  height: 48rpx;
+  padding: 0;
+  margin: 0;
+  line-height: 1;
+  background: transparent;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.share-button::after {
+  border: none;
+}
+
+.share-button text {
+  font-size: 32rpx;
+}
+
+/* Shared indicator styles */
+.shared-indicator {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 16rpx;
+}
+
+.shared-indicator text {
+  font-size: 28rpx;
+}
+
+.shared-count {
+  font-size: 24rpx;
+  color: #666;
+  margin-top: 4rpx;
+}
+
+/* Task content styles */
+.task-content {
+  flex: 1;
+  width: calc(100% - 72rpx);
+  display: flex;
+  flex-direction: column;
+}
+
+.task-title-container {
+  flex: 1;
+  margin-bottom: 8rpx;
+}
+
+.task-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+  display: block;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  white-space: normal;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+.task-title.done {
+  text-decoration: line-through;
+  color: #999;
+}
+
+.task-date-container {
+  margin-top: 8rpx;
+  margin-bottom: 16rpx;
+}
+
+.task-datetime {
+  font-size: 24rpx;
+  color: #999;
+  display: block;
+}
+
+.task-description-container {
+  margin-top: 16rpx;
+}
+
+.task-description {
+  font-size: 28rpx;
+  color: #666;
+  margin-top: 16rpx;
+  line-height: 1.5;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  white-space: normal;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+/* Task actions (Edit/Delete buttons) */
+.task-actions {
+  display: flex;
+  flex-direction: column;
+  margin-top: 24rpx;
+  gap: 16rpx;
+}
+
+.action-btn {
+  width: 100%;
+  height: 80rpx;
+  border-radius: 40rpx;
+  font-size: 32rpx;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  padding: 0;
+  margin: 0;
+  line-height: 1;
+}
+
+.action-btn::after {
+  border: none;
+}
+
+.action-btn.edit {
+  background: #e6f7ff;
+  color: #1296db;
+}
+
+.action-btn.delete {
+  background: #fff1f0;
+  color: #ff4d4f;
+}
+
+/* Shared badge styles */
+.shared-badge {
+  display: flex;
+  align-items: center;
+  background: #f0f7ff;
+  border-radius: 24rpx;
+  padding: 8rpx 16rpx;
+  margin-bottom: 16rpx;
+  display: inline-flex;
+}
+
+.shared-text {
+  font-size: 24rpx;
+  font-weight: bold;
+  color: #1296db;
+  margin-right: 8rpx;
+}
+
+.completion-status {
+  font-size: 22rpx;
+  color: #666;
+}
+
+.shared-users-list {
+  margin-top: 24rpx;
+  padding-top: 16rpx;
+  border-top: 2rpx dashed #f0f0f0;
+}
+
+.shared-with-header {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 16rpx;
+  display: block;
+}
+
+.shared-user-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 16rpx;
+  padding: 8rpx;
+  background: #f9f9f9;
+  border-radius: 8rpx;
+}
+
+.user-avatar {
+  width: 48rpx;
+  height: 48rpx;
+  border-radius: 50%;
+  margin-right: 16rpx;
+}
+
+.user-name {
+  font-size: 28rpx;
+  color: #333;
+  flex: 1;
+}
+
+.user-status {
+  font-size: 24rpx;
+  padding: 4rpx 12rpx;
+  border-radius: 16rpx;
+}
+
+.user-status.pending {
+  background: #fffbe6;
+  color: #faad14;
+}
+
+.user-status.completed {
+  background: #f6ffed;
+  color: #52c41a;
+}
+
+.user-status.in-progress {
+  background: #f0f7ff;
+  color: #1296db;
+}
+
+.empty-state {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.empty-state text {
+  font-size: 36rpx;
+  color: #999;
+}
+
+.calendar-container {
+  width: 100%;
+  background: #fff;
+  border-radius: 32rpx;
+  padding: 40rpx;
+  box-shadow: 0 8rpx 16rpx rgba(0, 0, 0, 0.06);
+  box-sizing: border-box;
+}
+
+.calendar-view {
+  padding: 0;
+}
+
+.list-view {
+  padding: 0 48rpx;
+}
+
+.day-tasks {
+  margin-top: 40rpx;
+}
+
+.day-title {
+  font-size: 32rpx;
+  font-weight: 500;
+  color: #333;
+  margin-bottom: 24rpx;
+}
+
+.task-details-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+}
+
+.modal-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-backdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+  width: 85%;
+  max-width: 600rpx;
+  background: #fff;
+  border-radius: 20rpx;
+  overflow: hidden;
+  z-index: 1001;
+  box-shadow: 0 10rpx 30rpx rgba(0, 0, 0, 0.15);
+}
+
+.modal-header {
+  padding: 30rpx;
+  border-bottom: 1rpx solid #f0f0f0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal-title {
+  font-size: 34rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.modal-close {
+  font-size: 40rpx;
+  color: #999;
+  line-height: 1;
+}
+
+.modal-body {
+  padding: 30rpx;
+  max-height: 60vh;
+  overflow-y: auto;
+}
+
+.modal-footer {
+  padding: 24rpx;
+  display: flex;
+  justify-content: flex-end;
+  border-top: 1rpx solid #f0f0f0;
+}
+
+.modal-btn {
+  padding: 16rpx 30rpx;
+  border-radius: 8rpx;
+  font-size: 28rpx;
+  margin-left: 20rpx;
+}
+
+.modal-btn.confirm {
+  background: #1296db;
+  color: #fff;
+}
+
+.modal-btn.cancel {
+  background: #f0f0f0;
+  color: #666;
+}
+
+.share-instruction {
+  font-size: 30rpx;
+  color: #333;
+  margin-bottom: 24rpx;
+  display: block;
+}
+
+.selected-count {
+  font-size: 26rpx;
+  color: #666;
+  margin-bottom: 24rpx;
+}
+
+.friends-list {
+  max-height: 50vh;
+  margin-bottom: 24rpx;
+}
+
+.friend-item {
+  display: flex;
+  align-items: center;
+  padding: 16rpx 20rpx;
+  border-radius: 8rpx;
+  margin-bottom: 16rpx;
+  background: #f8f8f8;
+  transition: all 0.2s ease;
+}
+
+.friend-item.selected {
+  background: #e6f7ff;
+  border: 1rpx solid #91d5ff;
+}
+
+.friend-avatar {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 50%;
+  margin-right: 20rpx;
+}
+
+.friend-name {
+  flex: 1;
+  font-size: 30rpx;
+  color: #333;
+}
+
+.selection-indicator {
+  width: 40rpx;
+  height: 40rpx;
+}
+
+.shared-task-info {
+  padding: 16rpx;
+  background: #f8f8f8;
+  border-radius: 8rpx;
+  margin-bottom: 24rpx;
+}
+
+.shared-task-name {
+  font-size: 30rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 8rpx;
+  display: block;
+}
+
+.shared-task-status {
+  font-size: 26rpx;
+  color: #666;
+}
+
+.shared-users-detail {
+  margin-top: 16rpx;
+}
+
+.shared-user-item.owner {
+  background: #f0f7ff;
+}
+
+.edit-menu {
+  position: relative;
+  width: 100%;
+  margin: 0;
+  padding: 24rpx;
+  box-sizing: border-box;
+}
+
+.edit-form {
+  background-color: #f9f9f9;
+  border-radius: 12rpx;
+  padding: 24rpx;
+  margin-bottom: 16rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.05);
+  width: calc(100% - 48rpx);
+  margin-left: 0;
+  margin-right: 0;
+  box-sizing: border-box;
+  overflow: visible;
+  overflow-x: hidden;
+  padding-right: 0;
+  margin-right: 0;
+}
+
+.form-group {
+  margin-bottom: 24rpx;
+}
+
+.form-label {
+  display: block;
+  font-size: 28rpx;
+  color: #333;
+  margin-bottom: 8rpx;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.form-input {
+  width: 100%;
+  height: 80rpx;
+  background: #f8f8f8;
+  border-radius: 8rpx;
+  padding: 0 24rpx;
+  font-size: 28rpx;
+  text-align: left;
+  box-sizing: border-box;
+  border: 1px solid #ddd;
+}
+
+.form-input.single-line {
+  height: 80rpx;
+  padding: 0 24rpx;
+  font-size: 28rpx;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8rpx;
+  box-sizing: border-box;
+}
+
+.form-textarea {
+  width: 100%;
+  padding: 16rpx;
+  border: 1px solid #ddd;
+  border-radius: 8rpx;
+  font-size: 28rpx;
+  box-sizing: border-box;
+}
+
+.form-textarea {
+  height: 160rpx;
+}
+
+.picker-view {
+  width: 100%;
+  padding: 16rpx;
+  border: 1px solid #ddd;
+  border-radius: 8rpx;
+  font-size: 28rpx;
+  box-sizing: border-box;
+  background: #fff;
+}
+
+.priority-picker {
+  display: flex;
+  align-items: center;
+}
+
+.priority-indicator {
+  width: 24rpx;
+  height: 24rpx;
+  border-radius: 50%;
+  margin-right: 16rpx;
+  border: 1px solid #ddd;
+}
+
+.priority-indicator.priority-red {
+  background-color: #ff0000;
+  border-color: #ff0000;
+  box-shadow: 0 0 5rpx rgba(255, 0, 0, 0.3);
+}
+
+.priority-indicator.priority-yellow {
+  background-color: #ffcc00;
+  border-color: #ffcc00;
+  box-shadow: 0 0 5rpx rgba(255, 204, 0, 0.3);
+}
+
+.priority-indicator.priority-green {
+  background-color: #00cc00;
+  border-color: #00cc00;
+  box-shadow: 0 0 5rpx rgba(0, 204, 0, 0.3);
+}
+
+.priority-red {
+  color: #333;
+  border-left: 8rpx solid #ff0000;
+  padding-left: 12rpx;
+  background-color: rgba(255, 0, 0, 0.05);
+  font-weight: 500;
+}
+
+.priority-yellow {
+  color: #333;
+  border-left: 8rpx solid #ffcc00;
+  padding-left: 12rpx;
+  background-color: rgba(255, 204, 0, 0.05);
+  font-weight: 500;
+}
+
+.priority-green {
+  color: #333;
+  border-left: 8rpx solid #00cc00;
+  padding-left: 12rpx;
+  background-color: rgba(0, 204, 0, 0.05);
+  font-weight: 500;
+}
+
+.priority-none {
+  color: #666;
+}
+
+/* Character counter for description */
+.char-count {
+  text-align: right;
+  font-size: 24rpx;
+  color: #888;
+  margin-top: 8rpx;
+}
+
+/* Priority classes for edit modal */
+.priority-low {
+  background-color: #f0f8ff; /* Light blue */
+  border-left: 8rpx solid #87cefa;
+}
+
+.priority-medium {
+  background-color: #fff8dc; /* Light yellow */
+  border-left: 8rpx solid #ffd700;
+}
+
+.priority-high {
+  background-color: #fff0f5; /* Light pink */
+  border-left: 8rpx solid #ff69b4;
+}
+
+/* User completed shared task style */
+.task-item.user-completed-shared {
+  background: #fafafa;
+  border-left-color: #d9d9d9;
+}
+
+.task-item.user-completed-shared .task-title {
+  color: #bfbfbf !important;
+  text-decoration: line-through;
+}
+
+.hidden-share-button {
+  position: fixed;
+  top: -999px;
+  left: -999px;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+  z-index: -1;
+}

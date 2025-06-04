@@ -1,0 +1,18 @@
+{
+  "title": "编辑任务",
+  "taskName": "任务名称",
+  "taskNamePlaceholder": "输入任务名称",
+  "description": "描述",
+  "descriptionPlaceholder": "输入任务描述",
+  "dueDate": "截止日期",
+  "selectDate": "选择日期",
+  "dueTime": "截止时间",
+  "selectTime": "选择时间",
+  "priority": "优先级",
+  "cancel": "取消",
+  "save": "保存",
+  "none": "无",
+  "low": "低",
+  "medium": "中",
+  "high": "高"
+}
